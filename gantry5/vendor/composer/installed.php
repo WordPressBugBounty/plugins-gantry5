@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'gantry/wordpress',
-        'pretty_version' => '5.5.22',
-        'version' => '5.5.22.0',
-        'reference' => '716b707d2defadbc5ff5a841025f3006bc1f2bc8',
+        'pretty_version' => '5.5.23',
+        'version' => '5.5.23.0',
+        'reference' => '80eb2439d312766b36e47ff5bf497202d5830318',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'gantry/wordpress' => array(
-            'pretty_version' => '5.5.22',
-            'version' => '5.5.22.0',
-            'reference' => '716b707d2defadbc5ff5a841025f3006bc1f2bc8',
+            'pretty_version' => '5.5.23',
+            'version' => '5.5.23.0',
+            'reference' => '80eb2439d312766b36e47ff5bf497202d5830318',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
