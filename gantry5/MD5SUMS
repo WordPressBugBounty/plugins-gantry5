@@ -1,7 +1,7 @@
 MD5SUMS	d41d8cd98f00b204e9800998ecf8427e
 admin/blueprints/gantry/theme/admin.yaml	b0f2b75b7146342191a950e684cbb8f5
 admin/blueprints/gantry/theme/configuration.yaml	bdca7a752f17b86e81a7d3bd65b81d21
-admin/blueprints/gantry/theme/details.yaml	213686f69f0d464413ff28e5fd4d8a13
+admin/blueprints/gantry/theme/details.yaml	5036d3e07864d6e55b52932153861d50
 admin/blueprints/menu/menu.yaml	80368c3fd17890c95d2056496f45ec60
 admin/blueprints/menu/menuitem.yaml	547d75466428e12a6e2c55c015443d09
 admin/css-compiled/g-admin.css	5bb38cca2f1a19a1ef3acd9b095f7d4f
@@ -259,6 +259,8 @@ assets/css/font-awesome.min.css	269550530cc127b6aa5a35925a7de6ce
 assets/css/font-awesome6-all.min.css	9402848c3d4bbc710c764326f8b887c9
 assets/css/font-awesome6-pseudo.min.css	f078bb59dea4595eb6922a814d72ccf2
 assets/css/font-awesome6-shim.min.css	945af432e96851f47f2b4ad641972c00
+assets/css/font-awesome7-all.min.css	db8e0af2bfbf78d912f3de852e05acec
+assets/css/font-awesome7-shim.min.css	54237d4399bf1299687a49742e1aa5e6
 assets/css/lightcase.css	dfdf96700a010c18cabd81d058a236cf
 assets/css/whoops.css	afac3c5ad7a94166ef0c93c42946fbe1
 assets/css/wordpress-admin-icon.css	9ad470190298467360851005552cc3f5
@@ -279,6 +281,8 @@ assets/fonts/lightcase.woff	30cce75077e855a9f9c53b2ba6e76c4d
 assets/images/gantry5-logo.png	4760ca4f7e636cdb069bab077e6e4549
 assets/js/font-awesome5-all.min.js	6db763bc4e4a292c7520eb0a5bad0f5c
 assets/js/font-awesome5-shim.min.js	cd53a56fd5accc9a5396a8eb66752d20
+assets/js/font-awesome7-all.min.js	f987908d0b699b8efa5fbafc2841ea29
+assets/js/font-awesome7-shim.min.js	23f6e651ee2569c22a83be257ef97582
 assets/js/lightcase.js	9deee98d0c1b00991ced68abba30ddd4
 assets/js/main.js	44fb255492ec012eeca7f2d61bbd5e0a
 assets/webfonts/fa-brands-400.eot	0fabb6606be4c45acfeedd115d0caca4
@@ -296,6 +300,10 @@ assets/webfonts/fa-solid-900.svg	03ba7cb710104df27f1c9c46d64bee4e
 assets/webfonts/fa-solid-900.ttf	781e85bb50c8e8301c30de56b31b1f04
 assets/webfonts/fa-solid-900.woff	ee09ad7553b8ad3d81150d609d5341a0
 assets/webfonts/fa-solid-900.woff2	c500da19d776384ba69573ae6fe274e7
+assets/webfonts/fa7/fa-brands-400.woff2	ed1903192eade544e6c2205902b678e4
+assets/webfonts/fa7/fa-regular-400.woff2	49d7fd7a16b90576fb4ac8e2b5f2ad27
+assets/webfonts/fa7/fa-solid-900.woff2	18dd0b25bda3d372b262b08edeed525a
+assets/webfonts/fa7/fa-v4compatibility.woff2	67b58b166bfed8ac01a5f93c2c57f431
 assets/yarn.lock	0d81a067ae8b0d8abe9cba4a78096331
 compat/composer.json	6c8a7639e15e227ba9a9340056fa10bd
 compat/composer.lock	55f5152c17878b58dceb3ca09dc8b411
@@ -309,7 +317,7 @@ compat/vendor/composer/autoload_psr4.php	0f8f17122cdd5bae888ff534a6bcf7f8
 compat/vendor/composer/autoload_real.php	8728b83a751ac7633c73a5cb0a9e14ca
 compat/vendor/composer/autoload_static.php	624a2b5d9dad14281da496b09d839e06
 compat/vendor/composer/installed.json	7a9765737227c787b55c06d9db8dba13
-compat/vendor/composer/installed.php	533e0626866d31b2007c44b8da2c8d50
+compat/vendor/composer/installed.php	d547536da1e3ef0106e0410ff2de8e29
 compat/vendor/composer/platform_check.php	9c5def58a7133edae32080dbd60c0c4f
 compat/vendor/pimple/pimple/.github/workflows/tests.yml	4e3bfd724bb9dc1fd2fa9932fcf496e7
 compat/vendor/pimple/pimple/README.rst	a956d6812cf186e51382ee7306532e6c
@@ -794,7 +802,7 @@ engines/nucleus/admin/blueprints/menu/block.yaml	da3b3b7948002ba1c9d84618ab67fb0
 engines/nucleus/admin/blueprints/position/chrome.yaml	9706c328779547e22edd19147b02b2ab
 engines/nucleus/blueprints/page/assets.yaml	c68b786eee9ccd0ed6a1c947ee62cbb9
 engines/nucleus/blueprints/page/body.yaml	7f6fc9e8368dbfcdb7ca1846d3394839
-engines/nucleus/blueprints/page/fontawesome.yaml	2f9294310bc4a536e0e20d19e760b051
+engines/nucleus/blueprints/page/fontawesome.yaml	9eb1dd92b5d966b2438c5ba1ed54df95
 engines/nucleus/blueprints/page/head.yaml	da69f501e6c1adbf91e2e14d12ee62fe
 engines/nucleus/css-compiled/nucleus.css	036ef7501b3971c107e4bc6e9d933be5
 engines/nucleus/css-compiled/wordpress.css	a959ea6829c0275f654e5bc0ae15ee36
@@ -995,13 +1003,13 @@ engines/nucleus/templates/layout/offcanvas.html.twig	04001d9f6b7c5573236c14b9a28
 engines/nucleus/templates/layout/section.html.twig	9fbd8525cbb293ea652d74bbf1aec361
 engines/nucleus/templates/layout/wrapper.html.twig	80575cb54b77a5b88b8299c99fda28e1
 engines/nucleus/templates/page.html.twig	d50a3745a0cf930987dc9ce6878ac085
-engines/nucleus/templates/page_head.html.twig	078952395209583b1784dc2ba1a2978f
+engines/nucleus/templates/page_head.html.twig	c05db538176622a30b708f4de7bc17a4
 engines/nucleus/templates/partials/particle.html.twig	07935cff8475093e4c5e315985b39b99
 engines/nucleus/views/partials/messages.html.twig	30d8cd177161ef82c68c3433d8165de7
 engines/nucleus/views/partials/page.html.twig	11f4c5d3a4b50ef2467cc66ad641a235
 engines/nucleus/views/partials/page_head.html.twig	3a3259470168a9ada5b0d1283f846aa3
 engines/nucleus/yarn.lock	add15b7eb0d2628efd9438c69dbd6f3c
-gantry5.php	24fba2c381047c3ffaa0dc4cc2dadff0
+gantry5.php	0faa217b54e12d5d2e94d6e6c3ac3b4a
 plugin-update-checker/Puc/v5/PucFactory.php	45c207cb399c16b15b9db102a7459914
 plugin-update-checker/Puc/v5p6/Autoloader.php	5e54fc9e7e426029c0d34e8e847c8774
 plugin-update-checker/Puc/v5p6/DebugBar/Extension.php	9adc88b3a0925a93fc307e669ac43fb3
@@ -1115,9 +1123,9 @@ plugin-update-checker/languages/plugin-update-checker.pot	51a432269c77b6ff45f83d
 plugin-update-checker/license.txt	b132e855ade298970dabd09fe4c42490
 plugin-update-checker/load-v5p6.php	0bb792a496abcdd19a1a105baf622326
 plugin-update-checker/plugin-update-checker.php	8d5da03f7dddf1265f1ba186dcff4db8
-readme.txt	7502c7ca40a38617b6ccd1c07dbde33c
+readme.txt	6f70a8f1160c73caa9d211ca6d0fd534
 src/Loader.php	7bcac3ed4b2071dc85e3a8695865f6cb
-src/RealLoader.php	0bf69a63b74491c3673c7fdc7ffbd312
+src/RealLoader.php	3da5d0762ff558fda32781bbaa600521
 src/bootstrap.php	cf7d06ca4e9e453b67d7e16fccb2388c
 src/classes/Gantry/Admin/Content.php	c9322e27ec37eafce3a11b13bde0b4c9
 src/classes/Gantry/Admin/Controller/Html/About.php	8950b7330c6181eed3bb37567e06bb12
@@ -1246,7 +1254,7 @@ src/classes/Gantry/Component/Twig/TokenParser/TokenParserSwitch.php	0881a9705583
 src/classes/Gantry/Component/Twig/TokenParser/TokenParserThrow.php	818ba9fd541e4a6ed5a2ce383d652209
 src/classes/Gantry/Component/Twig/TokenParser/TokenParserTryCatch.php	80747e415ec2a41195b7702fa01f9775
 src/classes/Gantry/Component/Twig/TwigCacheFilesystem.php	cdeafac07b40fb4e6abeaee5b3b372ef
-src/classes/Gantry/Component/Twig/TwigExtension.php	5a1aec7a9fbc58b414a56dc34221aacb
+src/classes/Gantry/Component/Twig/TwigExtension.php	3322889c3b1565f7f7c0c1c1903705d2
 src/classes/Gantry/Component/Url/Url.php	763a7519a336a5badcee2ff3248a5d92
 src/classes/Gantry/Component/Whoops/SystemFacade.php	c6690c136eab7cea14724766aaeda08a
 src/classes/Gantry/Framework/Assignments.php	aa2e424a60768e2d177c735bdfccf0cd
@@ -1313,7 +1321,7 @@ vendor/composer/autoload_psr4.php	54ee68e14a061d01a96a014f9e3dad1c
 vendor/composer/autoload_real.php	db4cdebcab8246e48c5e1b545ffc94f8
 vendor/composer/autoload_static.php	3df77bdb20e73c218d6f87efb03cfa44
 vendor/composer/installed.json	39535aa415b40d2fa12c4ef0bc1df113
-vendor/composer/installed.php	fd8a8e293667b5360cebd16e9f63cc70
+vendor/composer/installed.php	59ace8c1bfabf809b88c9a2bbf47698c
 vendor/composer/installers/composer.json	fe2afc5eae6eb4a33f2300d3f6ee0b81
 vendor/composer/installers/src/Composer/Installers/AglInstaller.php	7ef5b54fd29c23dca26c2a9edf0dd98c
 vendor/composer/installers/src/Composer/Installers/AkauntingInstaller.php	55a1a83b0b08b68e9f691ab804bac655

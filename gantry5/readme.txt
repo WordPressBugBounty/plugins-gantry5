@@ -5,7 +5,7 @@ Tags: gantry, gantry5, framework, template, theme, yaml, twig, timber, scss, htm
 Requires at least: 5.2
 Tested up to: 6.8.2
 Requires PHP: 8.1.0
-Stable tag: 5.5.23
+Stable tag: 5.5.24
 
 Gantry is a comprehensive set of building blocks to enable the rapid development and realization of a design into a flexible and powerful web platform
 
