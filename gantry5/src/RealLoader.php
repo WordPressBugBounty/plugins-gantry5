@@ -51,8 +51,8 @@ abstract class RealLoader
             throw new \LogicException(self::$errorMessageGantryLoaded);
         }
 
-        define('GANTRY5_VERSION', '5.5.24');
-        define('GANTRY5_VERSION_DATE', 'Sep 15, 2024');
+        define('GANTRY5_VERSION', '5.5.25');
+        define('GANTRY5_VERSION_DATE', 'Sep 15, 2025');
 
         if (!defined('DS')) {
             define('DS', DIRECTORY_SEPARATOR);
