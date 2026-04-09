@@ -317,7 +317,7 @@ compat/vendor/composer/autoload_psr4.php	0f8f17122cdd5bae888ff534a6bcf7f8
 compat/vendor/composer/autoload_real.php	8728b83a751ac7633c73a5cb0a9e14ca
 compat/vendor/composer/autoload_static.php	ec750d10bfd65365dc4b64f250b11cbf
 compat/vendor/composer/installed.json	7a9765737227c787b55c06d9db8dba13
-compat/vendor/composer/installed.php	dcb05fdc2b220235b63498650174b118
+compat/vendor/composer/installed.php	ebbee0baac17437d7d839a6c020b3716
 compat/vendor/composer/platform_check.php	9c5def58a7133edae32080dbd60c0c4f
 compat/vendor/pimple/pimple/.github/workflows/tests.yml	4e3bfd724bb9dc1fd2fa9932fcf496e7
 compat/vendor/pimple/pimple/README.rst	a956d6812cf186e51382ee7306532e6c
@@ -1009,7 +1009,7 @@ engines/nucleus/views/partials/messages.html.twig	30d8cd177161ef82c68c3433d8165d
 engines/nucleus/views/partials/page.html.twig	11f4c5d3a4b50ef2467cc66ad641a235
 engines/nucleus/views/partials/page_head.html.twig	3a3259470168a9ada5b0d1283f846aa3
 engines/nucleus/yarn.lock	add15b7eb0d2628efd9438c69dbd6f3c
-gantry5.php	3770fb9522548d0b49e05d84882450e9
+gantry5.php	4cdca867e564911de773b5f895d8fd5b
 plugin-update-checker/Puc/v5/PucFactory.php	45c207cb399c16b15b9db102a7459914
 plugin-update-checker/Puc/v5p6/Autoloader.php	5e54fc9e7e426029c0d34e8e847c8774
 plugin-update-checker/Puc/v5p6/DebugBar/Extension.php	9adc88b3a0925a93fc307e669ac43fb3
@@ -1123,9 +1123,9 @@ plugin-update-checker/languages/plugin-update-checker.pot	51a432269c77b6ff45f83d
 plugin-update-checker/license.txt	b132e855ade298970dabd09fe4c42490
 plugin-update-checker/load-v5p6.php	0bb792a496abcdd19a1a105baf622326
 plugin-update-checker/plugin-update-checker.php	8d5da03f7dddf1265f1ba186dcff4db8
-readme.txt	d9850891af017fae7aeb3d4d6bdee24a
+readme.txt	9fc29729f9767e73430bb6784549f34c
 src/Loader.php	7bcac3ed4b2071dc85e3a8695865f6cb
-src/RealLoader.php	cea26133f62f450765ec37bab651330d
+src/RealLoader.php	0a1600ddf409eff266f35cb6a52be9c3
 src/bootstrap.php	cf7d06ca4e9e453b67d7e16fccb2388c
 src/classes/Gantry/Admin/Content.php	c9322e27ec37eafce3a11b13bde0b4c9
 src/classes/Gantry/Admin/Controller/Html/About.php	8950b7330c6181eed3bb37567e06bb12
@@ -1230,7 +1230,7 @@ src/classes/Gantry/Component/Stylesheet/Scss/Functions.php	8695cd2bfa5b36e59af55
 src/classes/Gantry/Component/Stylesheet/Scss/LegacyCompiler.php	ee86540d43bcd475496cdae24e6beed0
 src/classes/Gantry/Component/Stylesheet/ScssCompiler.php	280c4a64fa6933fb1c9bd097c2e7745e
 src/classes/Gantry/Component/System/Messages.php	0e01f185ac9ddc26a11cf4117a1aee11
-src/classes/Gantry/Component/Theme/AbstractTheme.php	44918aebefd1b0c0517b030fa42574c5
+src/classes/Gantry/Component/Theme/AbstractTheme.php	531ee7711c7a89f1f61d8f768212a048
 src/classes/Gantry/Component/Theme/ThemeDetails.php	2f69babac26cadc8bb979c8f8e0fd631
 src/classes/Gantry/Component/Theme/ThemeInstaller.php	892f6f9edd7fa1c81d267c8e84aa4d24
 src/classes/Gantry/Component/Theme/ThemeInterface.php	671c203e0293cf308d35c527ec0209fe
@@ -1321,7 +1321,7 @@ vendor/composer/autoload_psr4.php	54ee68e14a061d01a96a014f9e3dad1c
 vendor/composer/autoload_real.php	66ac3708bb3e56803d25fa914d17b122
 vendor/composer/autoload_static.php	1b2e6634016e3b4c2720fee4374201e8
 vendor/composer/installed.json	abd07340be5892b383b04ab33b25579d
-vendor/composer/installed.php	96eca5a7e70e8ef9f4415ea9d72c08da
+vendor/composer/installed.php	5d6f0f0692e701fe2826dfbb99af71aa
 vendor/composer/installers/composer.json	fe2afc5eae6eb4a33f2300d3f6ee0b81
 vendor/composer/installers/src/Composer/Installers/AglInstaller.php	7ef5b54fd29c23dca26c2a9edf0dd98c
 vendor/composer/installers/src/Composer/Installers/AkauntingInstaller.php	55a1a83b0b08b68e9f691ab804bac655

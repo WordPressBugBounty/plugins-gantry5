@@ -3,7 +3,7 @@
  * Plugin Name: Gantry 5 Framework
  * Plugin URI: http://gantry.org/
  * Description: Framework for Gantry 5 based themes.
- * Version: 5.6.0
+ * Version: 5.6.1
  * Author: Tiger12, LLC
  * Author URI: http://tiger12.com/
  * License: GNU General Public License v2 or later
