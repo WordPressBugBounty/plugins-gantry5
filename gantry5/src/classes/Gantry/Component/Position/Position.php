@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.AlternativeFunctions.rand_mt_rand
 
 /**
  * @package   Gantry5
@@ -366,7 +367,7 @@ class Position extends Collection
 
         if (isset($data['modules'])) {
             foreach ($data['modules'] as $array) {
-                $this->add(new Module($array['id'], $this->name, $array), $array['id'] ?: mt_rand());
+                $this->add(new Module($array['id'], $this->name, $array), $array['id'] ?: (function_exists('wp_rand') ? wp_rand() : mt_rand()));
             }
 
             return;

@@ -16,6 +16,12 @@
 
 namespace Gantry\Framework\Base;
 
+if (!defined('ABSPATH')) {
+    if (!defined('_JEXEC') && !defined('GRAV_ROOT')) {
+        exit;
+    }
+}
+
 use Gantry\Component\Config\Config;
 use Gantry\Component\System\Messages;
 use Gantry\Debugger;

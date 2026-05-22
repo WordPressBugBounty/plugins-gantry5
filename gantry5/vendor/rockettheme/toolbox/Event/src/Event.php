@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\Event as BaseEvent;
  * @license MIT
  * @deprecated Event classes will be removed in the future. Use PSR-14 implementation instead.
  */
+#[\AllowDynamicProperties]
 class Event extends BaseEvent implements \ArrayAccess
 {
     use ArrayAccess, Constructor, Export;

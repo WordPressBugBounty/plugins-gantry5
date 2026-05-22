@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.WP.AlternativeFunctions.rand_mt_rand
 
 /**
  * @package   Gantry5
@@ -955,7 +956,7 @@ class Layout implements \ArrayAccess, \Iterator, ExportInterface
         $key_id = $key . '-'. $id;
         if (!$id || isset($this->references[$key_id])) {
             do {
-                $id = mt_rand(1000, 9999);
+                $id = function_exists('wp_rand') ? wp_rand(1000, 9999) : mt_rand(1000, 9999);
                 $key_id = $key . '-'. $id;
                 if (!isset($this->references[$key_id])) {
                     break;

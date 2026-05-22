@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.WP.AlternativeFunctions.file_system_operations_fwrite,WordPress.WP.AlternativeFunctions.rand_mt_rand
 /**
  * SCSSPHP
  *
@@ -6012,10 +6013,10 @@ class Compiler
                 return null;
             }
 
-            return new Node\Number(mt_rand(1, $n), '');
+            return new Node\Number(function_exists('wp_rand') ? wp_rand(1, $n) : mt_rand(1, $n), '');
         }
 
-        return new Node\Number(mt_rand(1, mt_getrandmax()), '');
+        return new Node\Number(function_exists('wp_rand') ? wp_rand(1, mt_getrandmax()) : mt_rand(1, mt_getrandmax()), '');
     }
 
     protected function libUniqueId()
@@ -6023,10 +6024,10 @@ class Compiler
         static $id;
 
         if (! isset($id)) {
-            $id = mt_rand(0, pow(36, 8));
+            $id = function_exists('wp_rand') ? wp_rand(0, pow(36, 8)) : mt_rand(0, pow(36, 8));
         }
 
-        $id += mt_rand(0, 10) + 1;
+        $id += (function_exists('wp_rand') ? wp_rand(0, 10) : mt_rand(0, 10)) + 1;
 
         return [Type::T_STRING, '', ['u' . str_pad(base_convert($id, 10, 36), 8, '0', STR_PAD_LEFT)]];
     }

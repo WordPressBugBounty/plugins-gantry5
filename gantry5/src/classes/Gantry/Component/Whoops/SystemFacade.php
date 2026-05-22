@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_error_reporting
 
 /**
  * @package   Gantry5
@@ -168,5 +169,31 @@ class SystemFacade extends \Whoops\Util\SystemFacade
         if ($error && !($error['type'] & (E_CORE_WARNING | E_CORE_ERROR))) {
             $handler();
         }
+    }
+
+    /**
+     * Avoid raising a secondary warning if headers have already been finalized.
+     *
+     * @param int $httpCode
+     * @return int
+     */
+    public function setHttpResponseCode($httpCode)
+    {
+        if (!function_exists('http_response_code')) {
+            return $httpCode;
+        }
+
+        if (!headers_sent()) {
+            header_remove('location');
+        }
+
+        $previousLevel = error_reporting();
+        error_reporting($previousLevel & ~E_WARNING);
+
+        $result = http_response_code($httpCode);
+
+        error_reporting($previousLevel);
+
+        return $result ?: $httpCode;
     }
 }

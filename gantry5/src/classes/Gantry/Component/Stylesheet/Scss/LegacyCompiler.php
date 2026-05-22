@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com

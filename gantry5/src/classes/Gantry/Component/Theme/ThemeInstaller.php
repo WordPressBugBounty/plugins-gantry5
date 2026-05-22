@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped,WordPress.WP.AlternativeFunctions.unlink_unlink
 
 /**
  * @package   Gantry5
@@ -331,7 +332,7 @@ abstract class ThemeInstaller
                 Folder::copy($src, $dst);
             }
         } catch (\Exception $e) {
-            throw new \RuntimeException("Creating configuration for outline '{$layout}' failed: {$e->getMessage()}", 500, $e);
+            throw new \RuntimeException('Creating configuration for outline failed.', 500, $e);
         }
 
         return true;

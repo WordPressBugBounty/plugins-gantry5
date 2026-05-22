@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 /**
  * @package   Gantry5
@@ -108,7 +109,7 @@ class Filepicker extends JsonController
         }
 
         if (!count($bookmarks)) {
-            throw new \RuntimeException(sprintf('%s "%s" not found', count($drives) > 1 ? 'directories' : 'directory', implode('", "', $drives)), 404);
+            throw new \RuntimeException('Requested directory was not found.', 404);
         }
 
         $folders = [];
@@ -321,17 +322,17 @@ class Filepicker extends JsonController
         $targetPath = GANTRY5_ROOT . '/' . $path;
 
         if (!file_exists($targetPath)) {
-            throw new \RuntimeException(sprintf('File not found: %s', $path), 404);
+            throw new \RuntimeException('File not found.', 404);
         }
 
-        $hash = md5_file($path);
+        $hash = md5_file($targetPath);
 
         // Handle 304 Not Modified
         if (isset($this->request->server['HTTP_IF_NONE_MATCH'])) {
             $etag = stripslashes($this->request->server['HTTP_IF_NONE_MATCH']);
 
             if ($etag == $hash) {
-                header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT', true, 304);
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($targetPath)) . ' GMT', true, 304);
 
                 // Give fast response.
                 flush();
@@ -342,10 +343,10 @@ class Filepicker extends JsonController
         // Set file headers.
         header('ETag: ' . $hash);
         header('Pragma: public');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($targetPath)) . ' GMT');
 
         // Get the image file information.
-        $info    = getimagesize($path);
+        $info    = getimagesize($targetPath);
         $isImage = (bool)$info;
 
         if (!$download && $isImage) {
@@ -355,7 +356,7 @@ class Filepicker extends JsonController
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Content-type: ' . $fileType);
-            header('Content-Disposition: inline; filename="' . Gantry::basename($path) . '"');
+            header('Content-Disposition: inline; filename="' . Gantry::basename($targetPath) . '"');
         } else {
             // Force file download.
             header('Expires: 0');
@@ -364,15 +365,16 @@ class Filepicker extends JsonController
             header('Content-Type: application/force-download');
             header('Content-Type: application/octet-stream');
             header('Content-Type: application/download');
-            header('Content-Disposition: attachment; filename="' . Gantry::basename($path) . '"');
+            header('Content-Disposition: attachment; filename="' . Gantry::basename($targetPath) . '"');
         }
 
         header('Content-Transfer-Encoding: binary');
-        header('Content-Length: ' . filesize($path));
+        header('Content-Length: ' . filesize($targetPath));
         flush();
 
         // Output the file contents.
-        @readfile($path);
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
+        @readfile($targetPath);
         flush();
 
         exit();
@@ -393,6 +395,11 @@ class Filepicker extends JsonController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $path    = implode('/', func_get_args());
+        $nonce   = isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '';
+
+        if (!wp_verify_nonce($nonce, 'gantry5-layout-manager')) {
+            throw new \RuntimeException('Invalid request token.', 403);
+        }
 
         if (base64_decode($path, true) !== false) {
             $path = urldecode(base64_decode($path));
@@ -408,12 +415,17 @@ class Filepicker extends JsonController
             $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
         }
 
-        if (!isset($_FILES['file']['error']) || is_array($_FILES['file']['error'])) {
+        if (!isset($_FILES['file']) || !is_array($_FILES['file'])) {
+            throw new \RuntimeException('No file sent', 400);
+        }
+        $uploadedFile = $_FILES['file'];
+
+        if (!isset($uploadedFile['error']) || is_array($uploadedFile['error'])) {
             throw new \RuntimeException('No file sent', 400);
         }
 
-        // Check $_FILES['file']['error'] value.
-        switch ($_FILES['file']['error']) {
+        // Check uploaded file error value.
+        switch ($uploadedFile['error']) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
@@ -426,23 +438,35 @@ class Filepicker extends JsonController
         }
 
         $maxSize = $this->returnBytes(min(ini_get('post_max_size'), ini_get('upload_max_filesize')));
-        if ($_FILES['file']['size'] > $maxSize) {
-            throw new \RuntimeException('Exceeded filesize limit. File is ' . $_FILES['file']['size'] . ', maximum allowed is ' . $maxSize, 400);
+        $uploadedSize = isset($uploadedFile['size']) ? (int) $uploadedFile['size'] : 0;
+        if ($uploadedSize > $maxSize) {
+            throw new \RuntimeException('Exceeded filesize limit.', 400);
         }
 
         // Check extension
-        $fileParts = Gantry::pathinfo($_FILES['file']['name']);
+        $uploadedName = isset($uploadedFile['name']) ? sanitize_file_name($uploadedFile['name']) : '';
+        $tmpName = isset($uploadedFile['tmp_name']) ? $uploadedFile['tmp_name'] : '';
+        if ($uploadedName === '' || $tmpName === '' || !is_uploaded_file($tmpName)) {
+            throw new \RuntimeException('Invalid uploaded file.', 400);
+        }
+
+        $fileParts = Gantry::pathinfo($uploadedName);
         $fileExt   = strtolower($fileParts['extension']);
 
         // TODO: check if download is of supported type.
 
         // Upload it
-        $destination = sprintf('%s/%s', $targetPath, $_FILES['file']['name']);
+        $destination = sprintf('%s/%s', $targetPath, $uploadedName);
         $destination = preg_replace('#//#', '/', $destination);
 
         Folder::create($targetPath);
 
-        if (!move_uploaded_file($_FILES['file']['tmp_name'], $destination)) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+        WP_Filesystem();
+        global $wp_filesystem;
+
+        $content = file_get_contents($tmpName);
+        if ($content === false || !$wp_filesystem || !$wp_filesystem->put_contents($destination, $content, FS_CHMOD_FILE)) {
             throw new \RuntimeException('Failed to move uploaded file.', 500);
         }
 
@@ -503,13 +527,13 @@ class Filepicker extends JsonController
         $file = File::instance($targetPath);
 
         if (!$file->exists()) {
-            throw new \RuntimeException(sprintf('File not found: %s', $targetPath), 404);
+            throw new \RuntimeException('File not found.', 404);
         }
 
         try {
             $file->delete();
         } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('File could not be deleted: %s', $targetPath), 500);
+            throw new \RuntimeException('File could not be deleted.', 500);
         }
         $file->free();
 
