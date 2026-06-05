@@ -4,8 +4,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -101,7 +101,7 @@ class SystemFacade extends \Whoops\Util\SystemFacade
     {
         // TODO: remove when upgrading to Twig 2+
         if (($level === E_DEPRECATED) && strpos($file, '/twig/') !== false) {
-            if (str_contains($message, '#[\ReturnTypeWillChange]') || str_contains($message, 'Passing null to parameter')) {
+            if (strpos($message, '#[\ReturnTypeWillChange]') !== false || strpos($message, 'Passing null to parameter') !== false) {
                 return true;
             }
         }

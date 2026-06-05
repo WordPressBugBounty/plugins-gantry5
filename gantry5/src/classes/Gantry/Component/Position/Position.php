@@ -43,7 +43,7 @@ class Position extends Collection
      * @param string $name
      * @param array $items
      */
-    public function __construct($name, array $items = null)
+    public function __construct($name, ?array $items = null)
     {
         $this->name = $name;
 

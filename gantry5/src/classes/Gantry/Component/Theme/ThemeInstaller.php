@@ -68,7 +68,7 @@ abstract class ThemeInstaller
      * @param array $filter
      * @return array
      */
-    public function getOutlines(array $filter = null)
+    public function getOutlines(?array $filter = null)
     {
         if (!isset($this->outlines)) {
             $this->outlines = [];
@@ -178,7 +178,7 @@ abstract class ThemeInstaller
      * @param array $outlines If parameter isn't provided, outlines list get reloaded from the disk.
      * @return $this
      */
-    public function setOutlines(array $outlines = null)
+    public function setOutlines(?array $outlines = null)
     {
         $this->outlines = $outlines;
 
@@ -188,7 +188,7 @@ abstract class ThemeInstaller
     /**
      * @param array $filter
      */
-    public function createOutlines(array $filter = null)
+    public function createOutlines(?array $filter = null)
     {
         $outlines = $this->getOutlines($filter);
 

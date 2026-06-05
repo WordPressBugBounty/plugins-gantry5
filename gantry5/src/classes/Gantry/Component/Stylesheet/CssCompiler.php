@@ -114,7 +114,7 @@ abstract class CssCompiler implements CssCompilerInterface
      * @param array $fonts
      * @return $this
      */
-    public function setFonts(array $fonts = null)
+    public function setFonts(?array $fonts = null)
     {
         if ($fonts !== null) {
             // Normalize font data.
@@ -141,7 +141,7 @@ abstract class CssCompiler implements CssCompilerInterface
      * @param array $paths
      * @return $this
      */
-    public function setPaths(array $paths = null)
+    public function setPaths(?array $paths = null)
     {
         if ($paths !== null) {
             $this->paths = $paths;
@@ -164,7 +164,7 @@ abstract class CssCompiler implements CssCompilerInterface
      * @param array $files
      * @return $this
      */
-    public function setFiles(array $files = null)
+    public function setFiles(?array $files = null)
     {
         if ($files !== null) {
             $this->files = $files;

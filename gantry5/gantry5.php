@@ -4,14 +4,14 @@
  * Plugin Name: Gantry 5 Framework
  * Plugin URI: http://gantry.org/
  * Description: Framework for Gantry 5 based themes.
- * Version: 5.6.1
+ * Version: 5.6.2
  * Author: Tiger12, LLC
  * Author URI: http://tiger12.com/
  * License: GNU General Public License v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gantry5
  * Domain Path: /admin/languages
- * 
+ *
  * originalCreator: RocketTheme (Gantry Framework)
  * currentDeveloper: Tiger12, LLC
  */
@@ -203,40 +203,86 @@ function gantry5_php_version_error()
         )
     );
 }
-// === Preserve Gantry theme settings on update ===
-add_action('upgrader_pre_install', function($return, $hook_extra) {
-    if (!empty($hook_extra['theme']) && in_array($hook_extra['theme'], ['g5_helium','g5_hydrogen'])) {
-        $themeDir = get_theme_root() . '/' . $hook_extra['theme'];
-        $backupDir = WP_CONTENT_DIR . '/gantry-theme-backups/' . $hook_extra['theme'];
-     require_once ABSPATH . 'wp-admin/includes/file.php';
-WP_Filesystem();
+// Preserve Gantry theme settings on update.
+add_action('upgrader_pre_install', 'gantry5_backup_theme_settings', 10, 2);
+add_action('upgrader_post_install', 'gantry5_restore_theme_settings', 10, 2);
 
-global $wp_filesystem;
+function gantry5_backup_theme_settings($return, $hook_extra)
+{
+    if (!gantry5_is_managed_theme_update($hook_extra)) {
+        return $return;
+    }
 
-if ($wp_filesystem->is_dir($backupDir)) {
-    $wp_filesystem->delete($backupDir, true); 
+    $theme = $hook_extra['theme'];
+    $theme_dir = get_theme_root() . '/' . $theme;
+    $backup_dir = WP_CONTENT_DIR . '/gantry-theme-backups/' . $theme;
+    $filesystem = gantry5_get_filesystem();
+
+    if (!$filesystem) {
+        return $return;
+    }
+
+    if ($filesystem->is_dir($backup_dir)) {
+        $filesystem->delete($backup_dir, true);
+    }
+
+    wp_mkdir_p($backup_dir);
+    gantry5_copy_theme_settings_directory($theme_dir . '/custom', $backup_dir . '/custom', $filesystem);
+    gantry5_copy_theme_settings_directory($theme_dir . '/config', $backup_dir . '/config', $filesystem);
+
+    return $return;
 }
 
-        wp_mkdir_p($backupDir);
-        if (is_dir("$themeDir/custom")) {
-            copy_dir("$themeDir/custom", "$backupDir/custom");
-        }
-        if (is_dir("$themeDir/config")) {
-            copy_dir("$themeDir/config", "$backupDir/config");
-        }
+function gantry5_restore_theme_settings($return, $hook_extra)
+{
+    if (!gantry5_is_managed_theme_update($hook_extra)) {
+        return $return;
     }
-    return $return;
-}, 10, 2);
-add_action('upgrader_post_install', function($return, $hook_extra) {
-    if (!empty($hook_extra['theme']) && in_array($hook_extra['theme'], ['g5_helium','g5_hydrogen'])) {
-        $themeDir = get_theme_root() . '/' . $hook_extra['theme'];
-        $backupDir = WP_CONTENT_DIR . '/gantry-theme-backups/' . $hook_extra['theme'];
-        if (is_dir("$backupDir/custom")) {
-            copy_dir("$backupDir/custom", "$themeDir/custom");
-        }
-        if (is_dir("$backupDir/config")) {
-            copy_dir("$backupDir/config", "$themeDir/config");
-        }
+
+    $theme = $hook_extra['theme'];
+    $theme_dir = get_theme_root() . '/' . $theme;
+    $backup_dir = WP_CONTENT_DIR . '/gantry-theme-backups/' . $theme;
+    $filesystem = gantry5_get_filesystem();
+
+    if (!$filesystem) {
+        return $return;
     }
+
+    gantry5_copy_theme_settings_directory($backup_dir . '/custom', $theme_dir . '/custom', $filesystem);
+    gantry5_copy_theme_settings_directory($backup_dir . '/config', $theme_dir . '/config', $filesystem);
+
     return $return;
-}, 10, 2);
+}
+
+function gantry5_is_managed_theme_update($hook_extra)
+{
+    if (empty($hook_extra['theme'])) {
+        return false;
+    }
+
+    return in_array($hook_extra['theme'], array('g5_helium', 'g5_hydrogen'), true);
+}
+
+function gantry5_get_filesystem()
+{
+    global $wp_filesystem;
+
+    if (!function_exists('WP_Filesystem')) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
+
+    if (!WP_Filesystem()) {
+        return false;
+    }
+
+    return $wp_filesystem;
+}
+
+function gantry5_copy_theme_settings_directory($source, $destination, $filesystem)
+{
+    if (!$filesystem->is_dir($source)) {
+        return;
+    }
+
+    copy_dir($source, $destination);
+}

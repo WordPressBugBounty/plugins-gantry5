@@ -82,7 +82,7 @@ trait ThemeTrait
      * @param array $outlines
      * @return array List of CSS warnings.
      */
-    public function updateCss(array $outlines = null)
+    public function updateCss(?array $outlines = null)
     {
         $gantry = static::gantry();
         $compiler = $this->compiler();

@@ -531,7 +531,7 @@ class Menu extends HtmlController
      * @return AbstractMenu
      * @throws \RuntimeException
      */
-    protected function loadResource($id, Config $config = null)
+    protected function loadResource($id, ?Config $config = null)
     {
         /** @var MenuObject $menus */
         $menus = $this->container['menu'];

@@ -583,36 +583,21 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "RocketTheme\\Toolbox\\ArrayTraits\\": "ArrayTraits/src",
-                    "RocketTheme\\Toolbox\\Blueprints\\": "Blueprints/src",
-                    "RocketTheme\\Toolbox\\Compat\\": "Compat/src",
                     "RocketTheme\\Toolbox\\DI\\": "DI/src",
-                    "RocketTheme\\Toolbox\\Event\\": "Event/src",
                     "RocketTheme\\Toolbox\\File\\": "File/src",
-                    "RocketTheme\\Toolbox\\ResourceLocator\\": "ResourceLocator/src",
+                    "RocketTheme\\Toolbox\\Event\\": "Event/src",
+                    "RocketTheme\\Toolbox\\Compat\\": "Compat/src",
                     "RocketTheme\\Toolbox\\Session\\": "Session/src",
-                    "RocketTheme\\Toolbox\\StreamWrapper\\": "StreamWrapper/src"
+                    "RocketTheme\\Toolbox\\Blueprints\\": "Blueprints/src",
+                    "RocketTheme\\Toolbox\\ArrayTraits\\": "ArrayTraits/src",
+                    "RocketTheme\\Toolbox\\StreamWrapper\\": "StreamWrapper/src",
+                    "RocketTheme\\Toolbox\\ResourceLocator\\": "ResourceLocator/src"
                 },
                 "exclude-from-classmap": [
                     "**/tests/"
                 ]
             },
-            "archive": {
-                "exclude": [
-                    "tests"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit run unit"
-                ],
-                "test-windows": [
-                    "vendor\\bin\\phpunit run unit"
-                ],
-                "phpstan": [
-                    "vendor/bin/phpstan analyse -l 8 -c ./tests/phpstan/phpstan.neon . --memory-limit=128M --no-progress"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -623,8 +608,8 @@
                 "rockettheme"
             ],
             "support": {
-                "source": "https://github.com/rockettheme/toolbox/tree/1.6.5",
-                "issues": "https://github.com/rockettheme/toolbox/issues"
+                "issues": "https://github.com/rockettheme/toolbox/issues",
+                "source": "https://github.com/rockettheme/toolbox/tree/1.6.5"
             },
             "install-path": "../rockettheme/toolbox"
         },

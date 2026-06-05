@@ -4,8 +4,8 @@
 /**
  * @package   Gantry5
  * @author    Tiger12 http://tiger12.com
- * @originalCreator  RocketTheme (Gantry Framework) 
- * @currentDeveloper  Tiger12, LLC 
+ * @originalCreator  RocketTheme (Gantry Framework)
+ * @currentDeveloper  Tiger12, LLC
  * @copyright Copyright (C) 2007 - 2022 Tiger12, LLC
  * @license   Dual License: MIT or GNU/GPLv2 and later
  *
@@ -395,24 +395,13 @@ class Filepicker extends JsonController
         /** @var UniformResourceLocator $locator */
         $locator = $this->container['locator'];
         $path    = implode('/', func_get_args());
-        $nonce   = isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '';
 
-        if (!wp_verify_nonce($nonce, 'gantry5-layout-manager')) {
+        if (function_exists('check_ajax_referer') && !check_ajax_referer('gantry5-layout-manager', '_wpnonce', false)) {
             throw new \RuntimeException('Invalid request token.', 403);
         }
 
         if (base64_decode($path, true) !== false) {
             $path = urldecode(base64_decode($path));
-        }
-
-        $stream = explode('://', $path);
-        $scheme = $stream[0];
-
-        $isStream = $locator->schemeExists($scheme);
-        if ($isStream) {
-            $targetPath = dirname($locator->findResource($path, true, true));
-        } else {
-            $targetPath = dirname(GANTRY5_ROOT . '/' . $path);
         }
 
         if (!isset($_FILES['file']) || !is_array($_FILES['file'])) {
@@ -444,7 +433,10 @@ class Filepicker extends JsonController
         }
 
         // Check extension
-        $uploadedName = isset($uploadedFile['name']) ? sanitize_file_name($uploadedFile['name']) : '';
+        $uploadedName = isset($uploadedFile['name']) && is_string($uploadedFile['name']) ? Gantry::basename($uploadedFile['name']) : '';
+        if (function_exists('sanitize_file_name')) {
+            $uploadedName = sanitize_file_name($uploadedName);
+        }
         $tmpName = isset($uploadedFile['tmp_name']) ? $uploadedFile['tmp_name'] : '';
         if ($uploadedName === '' || $tmpName === '' || !is_uploaded_file($tmpName)) {
             throw new \RuntimeException('Invalid uploaded file.', 400);
@@ -455,18 +447,15 @@ class Filepicker extends JsonController
 
         // TODO: check if download is of supported type.
 
+        $targetPath = $this->getUploadTargetPath($path, $locator);
+
         // Upload it
         $destination = sprintf('%s/%s', $targetPath, $uploadedName);
         $destination = preg_replace('#//#', '/', $destination);
 
         Folder::create($targetPath);
 
-        require_once ABSPATH . 'wp-admin/includes/file.php';
-        WP_Filesystem();
-        global $wp_filesystem;
-
-        $content = file_get_contents($tmpName);
-        if ($content === false || !$wp_filesystem || !$wp_filesystem->put_contents($destination, $content, FS_CHMOD_FILE)) {
+        if (!$this->writeUploadedFile($tmpName, $destination)) {
             throw new \RuntimeException('Failed to move uploaded file.', 500);
         }
 
@@ -474,6 +463,115 @@ class Filepicker extends JsonController
         $this->attachData($finfo, new \SplFileInfo($destination), $targetPath);
 
         return new JsonResponse(['success' => 'File uploaded successfully', 'finfo' => $finfo, 'url' => $path]);
+    }
+
+    /**
+     * Persist an uploaded file through the active filesystem layer.
+     *
+     * @param string $source
+     * @param string $destination
+     * @return bool
+     */
+    protected function writeUploadedFile($source, $destination)
+    {
+        if (defined('ABSPATH')) {
+            if (!function_exists('WP_Filesystem')) {
+                require_once ABSPATH . 'wp-admin/includes/file.php';
+            }
+
+            WP_Filesystem();
+            global $wp_filesystem;
+
+            $content = file_get_contents($source);
+            return $content !== false && $wp_filesystem && $wp_filesystem->put_contents($destination, $content, FS_CHMOD_FILE);
+        }
+
+        return $this->moveLocalFile($source, $destination);
+    }
+
+    /**
+     * Move a local file without using the directory-only Folder::move() helper.
+     *
+     * @param string $source
+     * @param string $destination
+     * @return bool
+     */
+    protected function moveLocalFile($source, $destination)
+    {
+        try {
+            Folder::moveFile($source, $destination);
+            return true;
+        } catch (\RuntimeException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Resolve the real directory where the uploaded file should be written.
+     *
+     * @param string $path
+     * @param UniformResourceLocator $locator
+     * @return string
+     */
+    protected function getUploadTargetPath($path, UniformResourceLocator $locator)
+    {
+        $path = str_replace('\\', '/', $path);
+
+        $stream = explode('://', $path, 2);
+        $scheme = $stream[0];
+
+        if ($locator->schemeExists($scheme)) {
+            $directory = $this->getUploadDirectory($path);
+            $targetPath = $locator->findResource($directory, true, true);
+
+            if (!$targetPath) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Unable to resolve upload target: %s',
+                        esc_html($directory)
+                    ),
+                    500
+                );
+            }
+
+            return rtrim($targetPath, '/\\');
+        }
+
+        $directory = dirname($path);
+        $directory = $directory === '.' ? '' : trim($directory, '/');
+
+        return rtrim(GANTRY5_ROOT, '/\\') . ($directory ? '/' . $directory : '');
+    }
+
+    /**
+     * Extract the folder portion from the encoded upload path while keeping stream prefixes intact.
+     *
+     * @param string $path
+     * @return string
+     */
+    protected function getUploadDirectory($path)
+    {
+        $stream = explode('://', $path, 2);
+
+        if (count($stream) === 2) {
+            $scheme = $stream[0];
+            $target = $stream[1];
+            $separator = strrpos($target, '/');
+
+            if ($separator === false) {
+                return $scheme . '://';
+            }
+
+            return $scheme . '://' . substr($target, 0, $separator);
+        }
+
+        $separator = strrpos($path, '/');
+
+        if ($separator === false) {
+            return $path;
+        }
+
+        return substr($path, 0, $separator);
     }
 
     /**

@@ -43,7 +43,7 @@ class Config implements \ArrayAccess, \Countable, \Iterator, ExportInterface
      * @param  array  $items  Initial items inside the iterator.
      * @param  callable|null $blueprint  Function to load Blueprints for the configuration.
      */
-    public function __construct(array $items, callable $blueprint = null)
+    public function __construct(array $items, ?callable $blueprint = null)
     {
         $this->items = $items;
         $this->blueprint = $blueprint;

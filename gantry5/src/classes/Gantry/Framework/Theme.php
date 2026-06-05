@@ -83,7 +83,7 @@ class Theme extends AbstractTheme
      * @param LoaderInterface $loader
      * @return Environment
      */
-    public function extendTwig(Environment $twig, LoaderInterface $loader = null)
+    public function extendTwig(Environment $twig, ?LoaderInterface $loader = null)
     {
         parent::extendTwig($twig, $loader);
 

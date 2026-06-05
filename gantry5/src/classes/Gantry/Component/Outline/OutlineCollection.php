@@ -109,7 +109,7 @@ class OutlineCollection extends Collection
      * @param string[]|null $include
      * @return $this
      */
-    public function filter(array $include = null)
+    public function filter(?array $include = null)
     {
         if ($include !== null) {
             foreach ($this->items as $key => $item) {
