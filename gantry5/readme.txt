@@ -5,7 +5,7 @@ Tags: gantry, gantry5, framework, theme, builder
 Requires at least: 5.2
 Tested up to: 7.0
 Requires PHP: 8.1.0
-Stable tag: 5.6.2
+Stable tag: 5.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
