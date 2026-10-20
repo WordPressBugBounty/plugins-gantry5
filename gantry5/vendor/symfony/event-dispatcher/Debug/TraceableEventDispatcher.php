@@ -42,7 +42,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
     private $requestStack;
     private $currentRequestHash = '';
 
-    public function __construct(EventDispatcherInterface $dispatcher, Stopwatch $stopwatch, LoggerInterface $logger = null, RequestStack $requestStack = null)
+    public function __construct(EventDispatcherInterface $dispatcher, Stopwatch $stopwatch, ?LoggerInterface $logger = null, ?RequestStack $requestStack = null)
     {
         $this->dispatcher = LegacyEventDispatcherProxy::decorate($dispatcher);
         $this->stopwatch = $stopwatch;

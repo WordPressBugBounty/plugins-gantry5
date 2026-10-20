@@ -20,7 +20,7 @@ class EventDispatcher extends BaseEventDispatcher
      * @param BaseEvent|null $event
      * @return BaseEvent|null
      */
-    public function dispatch($eventName, BaseEvent $event = null)
+    public function dispatch($eventName, ?BaseEvent $event = null)
     {
         if (null === $event) {
             $event = new Event();
